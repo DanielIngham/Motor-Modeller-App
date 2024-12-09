@@ -12,17 +12,24 @@ serialReciever::~serialReciever()
     wait();
 }
 
-void serialReciever::startReceiver(const QString &portName, int waitTimeout, const QString &response)
+/*!
+ * \brief serialReciever::startReceiver initiates the communication link between the application and the embedded device.
+ * \param portName  The COMM port name (e.g COM5).
+ * \param waitTimeout   Connection timeout period.
+ */
+void serialReciever::startReceiver(const QString &portName, int waitTimeout)
 {
     const QMutexLocker locker(&m_mutex);
     m_portName = portName;
     m_waitTimeout = waitTimeout;
-    m_response = response;
 
     if (!isRunning())
         start();
 }
 
+/*!
+ * \brief serialReciever::run
+ */
 void serialReciever::run()
 {
     bool currentPortNameChanged = false;
@@ -38,7 +45,6 @@ void serialReciever::run()
 
     /* Set wait time and data response */
     int currentWaitTimeout = m_waitTimeout;
-    QString currentRespone = m_response;
 
     m_mutex.unlock();
 
@@ -110,7 +116,6 @@ void serialReciever::run()
         }
 
         currentWaitTimeout = m_waitTimeout;
-        currentRespone = m_response;
         m_mutex.unlock();
     }
 }

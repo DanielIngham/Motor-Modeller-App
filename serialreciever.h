@@ -16,11 +16,10 @@ public:
     explicit serialReciever(QObject *parent = nullptr);
     ~serialReciever();
 
-    void startReceiver(const QString &portName, int waitTimeout, const QString &response);
+    void startReceiver(const QString &portName, int waitTimeout);
 
 signals:
-    void sensorData(const float &loadCellReading);
-    void request(const QString &s);
+    void sensorData(const float &loadCellReading);  ///< Raw loadcell sensor data
     void error(const QString &s);
     void timeout(const QString &s);
 
@@ -28,7 +27,6 @@ private:
     void run() override;
 
     QString m_portName;
-    QString m_response;
     int m_waitTimeout = 0;
     QMutex m_mutex;
     bool m_quit = false;

@@ -17,13 +17,13 @@ public slots:
 signals:
 
 private:
-    float m_knownWeight = 0.0;
-    float m_calibrationFactor = 0.0;
-    float m_offset = 0.0;
-    float m_loadCellReading;
+    float m_knownWeight = 0.0;          ///< Known Weight used for calibration of raw loadcell data.
+    float m_calibrationFactor = 0.0;    ///< Linear Calibration factor calculated during calibration.
+    float m_offset = 0.0;               ///< Linear Offset for raw loadcell data.
+    float m_loadCellReading;            ///< Raw loadcell reading.
 
-    QList<float> offset_values;
-    QList<float> calibration_values;
+    QList<float> offset_values;         ///< Vector of offset values such used for averaging the offset.
+    QList<float> calibration_values;    ///< Vector of calibration values used for averaging calibration factor.
 
     float listAverage( QList<float> inputList);
 
