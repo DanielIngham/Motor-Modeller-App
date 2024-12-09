@@ -1,2 +1,2 @@
-#h1 Motor Modelling Desktop Application
+# Motor Modelling Desktop Application
 QT/QML-basedVisualiser for data acquired by the embedded motor modelling platform.
