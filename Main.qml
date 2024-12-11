@@ -1,11 +1,35 @@
 import QtQuick
 import QtQuick.Controls
+import QtCharts
+import QtCore
 
-Window {
+ ApplicationWindow {
     width: 640
     height: 480
     visible: true
     title: qsTr("Motor Modeller")
+
+    // StateGroup {
+    //     state : "Login"
+    //     states : [
+    //         State {
+    //             name: "calibration"
+
+    //             // PropertyChanges {
+    //                 // target: object
+
+    //             // }
+    //         }
+    //     ]
+    // }
+
+    Offset {
+        id: offset
+        width : 100
+        height: 100
+
+
+    }
 
     TextField {
         id: knownWeightInput
