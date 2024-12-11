@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     serialReciever *m_thread = new serialReciever;  ///< Create new instance of serial reception class
     dataHandler *dh = new dataHandler;              ///< Create new instance of datahandler class
