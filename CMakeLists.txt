@@ -16,10 +16,10 @@ qt_add_executable(appMotorModeller
 qt_add_qml_module(appMotorModeller
     URI MotorModeller
     VERSION 1.0
-    QML_FILES
-        Main.qml
-        SOURCES serialreciever.h serialreciever.cpp
-        SOURCES datahandler.h datahandler.cpp
+    QML_FILES Main.qml
+    SOURCES serialreciever.h serialreciever.cpp
+    SOURCES datahandler.h datahandler.cpp
+    QML_FILES Offset.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -35,6 +35,10 @@ set_target_properties(appMotorModeller PROPERTIES
 
 target_link_libraries(appMotorModeller
     PRIVATE Qt6::Quick
+    PRIVATE Qt6::Gui
+    PRIVATE Qt6::Core
+    PRIVATE Qt6::Widgets
+    PRIVATE Qt6::Sql
 )
 
 target_link_libraries(appMotorModeller PRIVATE Qt6::SerialPort)
