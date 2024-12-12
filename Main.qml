@@ -4,30 +4,36 @@ import QtCharts
 import QtCore
 
  ApplicationWindow {
-    width: 640
-    height: 480
+    width: 1920
+    height: 1080
     visible: true
     title: qsTr("Motor Modeller")
 
-    // StateGroup {
-    //     state : "Login"
-    //     states : [
-    //         State {
-    //             name: "calibration"
+    StateGroup {
+        id: appStates
+        state : "calibration"
+        states : [
+            State {
+                name: "home"
+                // PropertyChanges {
+                //     target: object
 
-    //             // PropertyChanges {
-    //                 // target: object
+                // }
+            },
 
-    //             // }
-    //         }
-    //     ]
-    // }
+            State {
+                name: "calibration"
+
+                PropertyChanges {
+                    target: offset.visible = true;
+                }
+            }
+        ]
+    }
 
     Offset {
         id: offset
-        width : 100
-        height: 100
-
+        visible: true
 
     }
 
@@ -63,6 +69,14 @@ import QtCore
             {
                 dataHandler.setKnownWeight(knownWeightInput.text)
             }
+        }
+    }
+
+    Connections {
+        target: dataHandler
+
+        function onOffsetCompleteChanged() {
+
         }
     }
 }
