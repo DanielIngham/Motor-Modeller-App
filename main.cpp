@@ -27,7 +27,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
+    /* Connect dh class to qml with name dataHandler */
     engine.rootContext()->setContextProperty("dataHandler", dh);
+    engine.rootContext()->setContextProperty("serial", m_thread);
     engine.load(url);
 
 
