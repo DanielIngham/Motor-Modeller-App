@@ -1,38 +1,81 @@
 import QtQuick
-import QtCharts
+import QtCharts 2.16
 
 Item {
-    id: offset
+    id: root
     anchors.fill: parent
     width: 100
     height: 100
+    property int counter: 0
+    property bool firstReading: true;
+
 
     ChartView {
-        title: "Scatters"
-        anchors.fill: parent
+        anchors.fill: root
+        opacity: 0.5
         antialiasing: true
+        legend.visible: false
+        ValuesAxis {
+            id: counter_axis
+            min: 0;
+            max: dataHandler.offsetBufferLength;
+            visible: false
+        }
 
-        ScatterSeries {
-            id: scatter1
-            name: "Scatter1"
-            XYPoint { x: 1.5; y: 1.5 }
-            XYPoint { x: 1.5; y: 1.6 }
-            XYPoint { x: 1.57; y: 1.55 }
-            XYPoint { x: 1.8; y: 1.8 }
-            XYPoint { x: 1.9; y: 1.6 }
-            XYPoint { x: 2.1; y: 1.3 }
-            XYPoint { x: 2.5; y: 2.1 }
+        ValuesAxis {
+            id: value_axis
+            min: 0
+            max: 1
+            visible: false
+
+            // Behavior on min { PropertyAnimation { duration: 10 }}
+            // Behavior on max { PropertyAnimation { duration: 10 }}
         }
 
         ScatterSeries {
-            name: "Scatter2"
-            XYPoint { x: 2.0; y: 2.0 }
-            XYPoint { x: 2.0; y: 2.1 }
-            XYPoint { x: 2.07; y: 2.05 }
-            XYPoint { x: 2.2; y: 2.9 }
-            XYPoint { x: 2.4; y: 2.7 }
-            XYPoint { x: 2.67; y: 2.65 }
+            id: offset_scatter
+            axisX: counter_axis
+            axisY: value_axis
+        }
+
+        Connections {
+            target: serial
+
+            function onSensorData( loadCellReading ) {
+                if ( counter > dataHandler.offsetBufferLength )
+                    return;
+                /* Update the counter axis (x-axis) to always be one larger than the counter. */
+                if ( counter == counter_axis.max ) {
+                    counter_axis.max = counter + 1;
+                }
+
+                /* Check if the min and max of the value axis (y-axis) has been set */
+                if ( firstReading ) {
+                    firstReading = false;
+                    value_axis.max = loadCellReading + 200;
+                    value_axis.min = loadCellReading - 200;
+                }
+                /* Perform range check and update value axis (y-axis) accordingly */
+                else {
+                    if ( loadCellReading < value_axis.min )
+                        value_axis.min = loadCellReading - 10;
+                    else if ( loadCellReading > value_axis.max )
+                        value_axis.max = loadCellReading + 10;
+                }
+
+                offset_scatter.append(counter, loadCellReading);
+                counter++;
+            }
         }
     }
+    Text {
+        id: heading
+        anchors {
+            verticalCenter: root.verticalCenter
+            horizontalCenter: root.horizontalCenter
 
+        }
+        text: "Measuring Offset"
+
+    }
 }
