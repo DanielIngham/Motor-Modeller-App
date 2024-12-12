@@ -27,6 +27,8 @@ void dataHandler::setLoadCellReading(float loadCellReading)
     else if ( m_offset == 0.0 ) { ///< If the average offset value is 0.0, then the offset average is determined and set.
         float offset_average = listAverage( offset_values );
         setOffset( offset_average );
+        m_offsetComplete = true;
+        emit offsetCompleteChanged();
         qDebug() << "OFFSET COMPLETE" ;
     }
     else {
