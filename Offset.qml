@@ -12,13 +12,16 @@ Item {
 
     ChartView {
         anchors.fill: root
-        opacity: 0.5
         antialiasing: true
+
+        backgroundColor: "#00FFFFFF"
         legend.visible: false
+        opacity: 0.5
+
         ValuesAxis {
             id: counter_axis
-            min: 0;
-            max: dataHandler.offsetBufferLength;
+            min: -10;
+            max: dataHandler.offsetBufferLength + 10;
             visible: false
         }
 
@@ -44,10 +47,6 @@ Item {
             function onSensorData( loadCellReading ) {
                 if ( counter > dataHandler.offsetBufferLength )
                     return;
-                /* Update the counter axis (x-axis) to always be one larger than the counter. */
-                if ( counter == counter_axis.max ) {
-                    counter_axis.max = counter + 1;
-                }
 
                 /* Check if the min and max of the value axis (y-axis) has been set */
                 if ( firstReading ) {
@@ -75,7 +74,18 @@ Item {
             horizontalCenter: root.horizontalCenter
 
         }
+        font.pixelSize: 50
+        font.letterSpacing: 10
+
         text: "Measuring Offset"
 
+        Connections {
+            target: dataHandler
+
+            function onOffsetCompleteChanged() {
+                heading.text = "Complete"
+            }
+        }
     }
+
 }
