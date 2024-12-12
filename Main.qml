@@ -1,11 +1,41 @@
 import QtQuick
 import QtQuick.Controls
+import QtCharts
+import QtCore
 
-Window {
-    width: 640
-    height: 480
+ ApplicationWindow {
+    width: 1920
+    height: 1080
     visible: true
     title: qsTr("Motor Modeller")
+
+    StateGroup {
+        id: appStates
+        state : "calibration"
+        states : [
+            State {
+                name: "home"
+                // PropertyChanges {
+                //     target: object
+
+                // }
+            },
+
+            State {
+                name: "calibration"
+
+                PropertyChanges {
+                    target: offset.visible = true;
+                }
+            }
+        ]
+    }
+
+    Offset {
+        id: offset
+        visible: true
+
+    }
 
     TextField {
         id: knownWeightInput
@@ -39,6 +69,14 @@ Window {
             {
                 dataHandler.setKnownWeight(knownWeightInput.text)
             }
+        }
+    }
+
+    Connections {
+        target: dataHandler
+
+        function onOffsetCompleteChanged() {
+
         }
     }
 }

@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     serialReciever *m_thread = new serialReciever;  ///< Create new instance of serial reception class
     dataHandler *dh = new dataHandler;              ///< Create new instance of datahandler class
@@ -27,7 +27,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
+    /* Connect dh class to qml with name dataHandler */
     engine.rootContext()->setContextProperty("dataHandler", dh);
+    engine.rootContext()->setContextProperty("serial", m_thread);
     engine.load(url);
 
 
