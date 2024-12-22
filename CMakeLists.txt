@@ -20,6 +20,7 @@ qt_add_qml_module(appMotorModeller
     SOURCES serialreciever.h serialreciever.cpp
     SOURCES datahandler.h datahandler.cpp
     QML_FILES Offset.qml
+    QML_FILES StartScreen.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
