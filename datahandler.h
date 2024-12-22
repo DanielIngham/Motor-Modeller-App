@@ -8,7 +8,7 @@ class dataHandler : public QObject
     Q_OBJECT
 public:
     Q_PROPERTY(int offsetBufferLength MEMBER m_offset_buffer_length NOTIFY offsetBufferLengthChanged); 	///< Connection between QML and C++ for offsetBufferLength
-    Q_PROPERTY(bool offsetComplete MEMBER m_offsetComplete NOTIFY offsetCompleteChanged);					///< Connection between QML and C++ for offsetComplete
+    Q_PROPERTY(bool offsetComplete 	  MEMBER m_offsetComplete 		NOTIFY offsetCompleteChanged);					///< Connection between QML and C++ for offsetComplete
 
     explicit dataHandler(QObject *parent = nullptr);
 
